@@ -32,6 +32,34 @@ There is no documented genealogical link between this Wexford family and the O'B
 | Glencolumbkille O'Bryens were Catholic gentry of Carran parish, Burren, Co. Clare | Confirmed by University of Galway Landed Estates database (O'Brien, Glencolumbkille); in March 1884 Turlough Butler O'Bryen's 396-acre estate at Glencolumbkille South was advertised for sale |
 | Bee Man career: appointed 1893 by the Congested Districts Board, travelled by bicycle, pioneered moveable-frame hives, died 1928 (at Inchiquin) | Confirmed by multiple beekeeping-history sources |
 
+## The published O'Brien pedigree and where Glencolumbkille fits
+
+The full O'Brien pedigree is indeed online in several places — O'Hart's *Irish Pedigrees* (O'Brien Kings of Thomond and its cadet-branch tables, on libraryireland.com and the House of Brian Boru blog), John O'Donovan's Ordnance Survey Letters for Co. Clare (1839, on the Clare Libraries local-studies site), thepeerage.com, and the Wikipedia Baron Inchiquin / Earl of Thomond articles. Piecing them together:
+
+### Main stem (O'Hart, *Irish Pedigrees*)
+
+Brian Boru (926–1014, 175th Monarch of Ireland, son of Cineadh son of Lorcan of the Dál gCais) → Kings of Thomond → Murrough O'Brien, who surrendered the kingship to Henry VIII and was created **1st Earl of Thomond and 1st Baron Inchiquin** (1543). The earldom then ran through his nephew's line (Earls, later Marquesses, of Thomond — **extinct 3 July 1855**), while the Barony of Inchiquin ran through Murrough's own son Dermod, 2nd Baron.
+
+### The Glencolumbkille pedigree (O'Donovan, Ordnance Survey Letters, Parish of Carron, 1839)
+
+O'Donovan recorded the family's own pedigree showing "where the present Marquis of Thomond and this Terence O'Brien of Glencolumbkille meet":
+
+1. **Dermot O'Brien, "4th" Lord Baron of Inchiquin** — m. the daughter and heiress of Sir Edmund FitzGerald of Ballymulloe (Ballymaloe), Co. Cork. This is the man Wikipedia numbers **Dermod Ruadh O'Brien, 5th Baron Inchiquin (1594–1624)**, whose wife was Ellen FitzGerald of Ballymaloe; his eldest son was Murrough "of the Burnings", 1st Earl of Inchiquin.
+2. **General Mortogh O'Brien** (a younger son) — m. Mary, dau. of Daniel MacNamara of Ballynahinch.
+3. **Daniel O'Brien "Spáineach"** (born in Spain) — m. Mary, sister of Col. John MacNamara of Moyriesk.
+4. **Cornelius O'Brien**, Captain in the French service — m. Mary, grand-niece of Sir Walter Blake, Bart.
+5. **Mortogh O'Brien** — m. Bridget, dau. of Joseph MacNamara of Newtown.
+6. **Torlogh, alias Terence O'Brien of Glencolumbkille, Esq.** — living 1839, m. Mary Ann MacDonogh, "by whom he had issue".
+
+### Down to the Bee Man
+
+- The forum's civil marriage record of a **son of Terence O'Bryen, Gentleman, to Anna Dorothea Butler** (dau. of Francis Butler, 14 Gardiner St.) at St Thomas's (Church of Ireland), Dublin, almost certainly gives Turlough Butler O'Bryen his middle name — i.e. **Anna Dorothea Butler was his mother**, and his father was a Terence O'Bryen of the Glencolumbkille line (names repeat: the 1839 Terence's son may also have been Terence). Her Protestantism would also explain why Turlough's sister Elizabeth is recorded as Church of Ireland in the 1911 census while the family was otherwise Catholic.
+- Siblings/half-siblings per the forum records: **Cornelius Thomas O'Bryen** (m. 1851, aged 28, Catherine Emily Falkiner; later of Clonroad, Ennis — ancestors of the Albert and George O'Bryen family of Lickaun), **James Joseph O'Bryen** (army officer, promoted 1870, d. 1920), **Murtagh** (RIC inspector, per Frank Brew's "seven sons of Terence"), and **Elizabeth** (in Turlough's 1911 household).
+
+### Why the pedigree matters for the title claim
+
+If O'Donovan's recorded descent from Dermod, Baron Inchiquin (d. 1624) via a younger son "General Mortogh" were proven, the Glencolumbkille line would have stood **senior as heirs male to the Barony of Inchiquin** after the Thomond marquessate line died out in 1855 — ahead of Dromoland, whose descent branches off much earlier (from Donough, a younger son of Murrough, 1st Earl of Thomond, ancestor of the Leameneagh/Dromoland branch). The Committee for Privileges nevertheless confirmed Sir Lucius O'Brien of Dromoland as 13th Baron Inchiquin on 11 April 1862 — meaning the "General Mortogh" link was never proven to the Lords' satisfaction. O'Donovan was sympathetically recording the family's own claim, not adjudicating it; that is exactly the gap between the pedigree "available online" and what the House of Lords would accept.
+
 ## Sources
 
 - [Aldwych bus bombing — Wikipedia](https://en.wikipedia.org/wiki/Aldwych_bus_bombing)
@@ -43,3 +71,8 @@ There is no documented genealogical link between this Wexford family and the O'B
 - [Landed Estates, University of Galway — O'Brien (Glencolumbkille)](https://landedestates.ie/estate/2135)
 - [Lucius O'Brien, 13th Baron Inchiquin — Wikipedia](https://en.wikipedia.org/wiki/Lucius_O%27Brien,_13th_Baron_Inchiquin)
 - [Baron Inchiquin — Wikipedia](https://en.wikipedia.org/wiki/Baron_Inchiquin)
+- [O'Donovan & Curry, Ordnance Survey Letters 1839, Parish of Carron (d) — Clare Libraries](https://clarelibraries.ie/localstudies/history/general/ordnance-survey-letters-by-john-odonovan-and-eugene-curry-1839/parish-of-carron-d/)
+- [O'Hart, Irish Pedigrees — O'Brien Kings of Thomond (libraryireland.com)](https://www.libraryireland.com/Pedigrees1/OBrienThomond.php)
+- [House of Brian Boru blog — O'Hart's O'Brien pedigrees transcribed](http://houseofbrianboru.blogspot.com/2011/08/irish-pedigrees-obrien-king-of-thomond.html)
+- [Dermod O'Brien, 5th Baron Inchiquin — Wikipedia](https://en.wikipedia.org/wiki/Dermod_O%27Brien,_5th_Baron_Inchiquin)
+- [Murrough O'Brien, 1st Earl of Thomond — Wikipedia](https://en.wikipedia.org/wiki/Murrough_O%27Brien,_1st_Earl_of_Thomond)
