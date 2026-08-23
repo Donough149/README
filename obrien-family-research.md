@@ -56,6 +56,44 @@ O'Donovan recorded the family's own pedigree showing "where the present Marquis 
 - The forum's civil marriage record of a **son of Terence O'Bryen, Gentleman, to Anna Dorothea Butler** (dau. of Francis Butler, 14 Gardiner St.) at St Thomas's (Church of Ireland), Dublin, almost certainly gives Turlough Butler O'Bryen his middle name — i.e. **Anna Dorothea Butler was his mother**, and his father was a Terence O'Bryen of the Glencolumbkille line (names repeat: the 1839 Terence's son may also have been Terence). Her Protestantism would also explain why Turlough's sister Elizabeth is recorded as Church of Ireland in the 1911 census while the family was otherwise Catholic.
 - Siblings/half-siblings per the forum records: **Cornelius Thomas O'Bryen** (m. 1851, aged 28, Catherine Emily Falkiner; later of Clonroad, Ennis — ancestors of the Albert and George O'Bryen family of Lickaun), **James Joseph O'Bryen** (army officer, promoted 1870, d. 1920), **Murtagh** (RIC inspector, per Frank Brew's "seven sons of Terence"), and **Elizabeth** (in Turlough's 1911 household).
 
+### Full lineage, Brian Boru to the Bee Man, with the weak links flagged
+
+Generations 1–21 are the standard, well-attested king-list and Inchiquin barony succession (O'Hart's *Irish Pedigrees*; peerage records):
+
+1. Brian Boru, High King, d. 1014 (Clontarf)
+2. Tadhg, d. 1023
+3. Toirdhealbhach, High King, d. 1086
+4. Diarmaid, King of Munster, d. 1118
+5. Toirdhealbhach, King of Munster, d. 1167
+6. Domhnall Mór, last King of Munster, d. 1194
+7. Donnchadh Cairbreach, King of Thomond, d. 1242
+8. Conchobhar na Siúdaine, d. 1268
+9. Tadhg Caoluisce, d. 1259 (predeceased his father)
+10. Toirdhealbhach Mór, d. 1306
+11. Muirchertach, d. 1343
+12. Mathghamhain Maonmhaighe
+13. Brian Catha an Aonaigh, d. c. 1399
+14. Toirdhealbhach Bóg, d. 1459
+15. Tadhg an Chomhaid, d. 1466
+16. Toirdhealbhach Donn, d. 1528 — last effective King of Thomond
+17. Murrough, 1st Earl of Thomond & 1st Baron Inchiquin (created 1543), d. 1551 — the earldom went to his nephew Donough's line (extinct as Marquesses of Thomond, 1855); the Dromoland branch descends from Murrough's younger son Donough of Leameneagh (d. 1582)
+18. Dermod, 2nd Baron Inchiquin, d. 1557
+19. Murrough, 3rd Baron, d. 1573
+20. Murrough, 4th Baron (1562–1597), drowned fording the River Erne
+21. Dermod Ruadh, 5th Baron (1594–1624), m. Ellen FitzGerald of Ballymaloe — the "Dermot who married the FitzGerald heiress" in O'Donovan's table (which numbers him 4th Baron); proven heir: Murrough "of the Burnings", 1st Earl of Inchiquin
+
+Generations 22–28 are the Glencolumbkille family's own account, with three weak points:
+
+22. **"General Mortogh O'Brien"**, claimed younger son of Dermod Ruadh, m. Mary MacNamara of Ballynahinch — **THE missing link**: he does not appear among Dermod's children in the standard peerage records, and this unproven link is precisely why the Lords found for Dromoland in 1862. (Possible conflation with a genuine O'Brien officer of the period is worth investigating.)
+23. Daniel "Spáineach", born in Spain (Wild Geese era, so plausibly b. c. 1690s–1710s), m. Mary MacNamara of Moyriesk — **chronology squeeze**: only two generations from a man born 1594; a generation may be missing here
+24. Cornelius, captain in the French service, m. Mary Blake
+25. Mortogh, m. Bridget MacNamara of Newtown
+26. Terence (Torlogh) of Glencolumbkille, living 1839, m. Mary Ann MacDonogh
+27. A Terence O'Bryen m. Anna Dorothea Butler (St Thomas's, Dublin) — **ambiguity**: the record calls the groom "son of Terence O'Bryen", so probably a junior Terence rather than #26 remarrying; either way, the Bee Man's parents
+28. Turlough Butler O'Bryen (1853–1928) and siblings Cornelius Thomas, James Joseph, Murtagh (RIC), Elizabeth — the line ends here (no children)
+
+Research leads for the missing link: the Inchiquin papers (NLI), and Spanish/French regimental records for Daniel "Spáineach" and Cornelius.
+
 ### Why the pedigree matters for the title claim
 
 If O'Donovan's recorded descent from Dermod, Baron Inchiquin (d. 1624) via a younger son "General Mortogh" were proven, the Glencolumbkille line would have stood **senior as heirs male to the Barony of Inchiquin** after the Thomond marquessate line died out in 1855 — ahead of Dromoland, whose descent branches off much earlier (from Donough, a younger son of Murrough, 1st Earl of Thomond, ancestor of the Leameneagh/Dromoland branch). The Committee for Privileges nevertheless confirmed Sir Lucius O'Brien of Dromoland as 13th Baron Inchiquin on 11 April 1862 — meaning the "General Mortogh" link was never proven to the Lords' satisfaction. O'Donovan was sympathetically recording the family's own claim, not adjudicating it; that is exactly the gap between the pedigree "available online" and what the House of Lords would accept.
