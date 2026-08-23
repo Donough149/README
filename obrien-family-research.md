@@ -98,6 +98,33 @@ Research leads for the missing link: the Inchiquin papers (NLI), and Spanish/Fre
 
 If O'Donovan's recorded descent from Dermod, Baron Inchiquin (d. 1624) via a younger son "General Mortogh" were proven, the Glencolumbkille line would have stood **senior as heirs male to the Barony of Inchiquin** after the Thomond marquessate line died out in 1855 — ahead of Dromoland, whose descent branches off much earlier (from Donough, a younger son of Murrough, 1st Earl of Thomond, ancestor of the Leameneagh/Dromoland branch). The Committee for Privileges nevertheless confirmed Sir Lucius O'Brien of Dromoland as 13th Baron Inchiquin on 11 April 1862 — meaning the "General Mortogh" link was never proven to the Lords' satisfaction. O'Donovan was sympathetically recording the family's own claim, not adjudicating it; that is exactly the gap between the pedigree "available online" and what the House of Lords would accept.
 
+## From *History of the O'Briens* (Donough O'Brien, 1949), pp. 180–184
+
+Photographed pages covering Chapter XVI — the O'Briens of Ara (Co. Tipperary), the Lohort Castle and Kilcor & Pellick Castle branches (Co. Cork), and a French branch. Transcribed highlights:
+
+### The Ara line (pp. 181–182)
+
+- **Brian Ruadh, 41st King of Thomond, d. 1277** — murdered by de Clare at Bunratty — is the progenitor. He was the *younger* son of Conor na Siúdaine and brother of Teige Caoluisce, "who carried down the descent of the main line of O'Brien to Turlogh Don." Driven from west of the Shannon, he settled in Ara, Co. Tipperary. (This confirms the main-line descent used in the lineage above: generation 9, Tadhg Caoluisce, was Brian Ruadh's brother.)
+- Descent: Brian Ruadh → Donald (m. Margaret, dau. of Turlogh Duff MacMahon) → Brian (m. dau. of Henry Burke, d. 1350) → Murrough na raithnidh (m. More, dau. of O'Kennedy of Ormonde, d. 1383) → Torlogh (m. Honor, dau. of Barry Oge of Buttevant, d. 1399) → Teige (d. 1474) → Donald Mor (d. 1508) → Murrough → **Mortogh Casch**.
+- Mortogh Casch's sons: **Torlogh Mac I-Brien of Ara** (à quo the **Lohort Castle** O'Briens, d. 1601) and **Mortogh of Duharrow** (à quo the **Kilcor and Pellick Castle** O'Briens of Co. Cork). The Kilcor/Pellick line ranks senior to Lohort.
+
+### The Kilcor & Pellick line (pp. 183–184)
+
+Mortogh Casch → Mortogh of Duharrow → Maurice (m. Margaret, heiress of David FitzGerald Barry of Kilcor, Co. Cork) → among descendants: **Terence O'Brien, RC Bishop of Emly (b. 1600, executed 1651)** and Maurice O'Brien, Bishop of Limerick; then the Kilcor/Pellick squires (Conor of Kilcor, Daniel of Pellick, Murrough of Pellick…) down seven generations to:
+
+- **Major General Terence O'Brien (1798–1865)**, acting Governor of Ceylon, m. Catharine Collins
+- his son **Lt. Col. J.T.N. O'Brien, Governor of Heligoland and Newfoundland, KCMG (d. 1903)** *(the tree also labels a "Sir Terence O'Brien KCMG, governor of Heligoland and Newfoundland (d. 1903)" — same office-holder)*
+- his sons **Brig. Gen. Edward Donough O'Brien CB, 14th Hussars (1858–1945)** and **Lt. Col. Charles R.M. O'Brien (b. 1859)**, with the 20th-century generations (Eileen Gladys m. 1917 Air Marshal Gossage; Terence Donough b. 1896; Terence b. 1918; Peter b. 1919 d. 1940, etc.). The branch was by then resident in England.
+
+### The French branch — and a Wexford surprise (p. 180)
+
+The French-branch table runs the main stem Brian Boru → … → Brian Catha an Aonaigh (d. 1399), then through **Cathir Dubh → Murrough of Togarrow → Owen of Togarrow and Monfin, near Ferns, Co. WEXFORD** — a documented Dalcassian O'Brien gentry family seated in north Wexford in the 1500s–1600s (Donell Owre of Monfin 1581; Teige "living in Wexford"; James b. 1587 d. 1617; property confiscated after 1641), whose descendants went to France (Irish Brigade — Walsh's and Bouillon's regiments — with French-named generations down to the 1870s).
+
+Two observations:
+
+1. **Relevance to the Edward O'Brien question**: this shows there *were* documented Dalcassian O'Briens in north Wexford (Togarrow/Monfin is near Ferns, ~15 km from Gorey) — so a Gorey O'Brien *could* in principle descend from a collateral of that stock, alongside O'Hart's separate note that descendants of Bran Fionn (a kinsman of Brian Boru's line) took the surname O'Brien in Wexford. But the traced Togarrow line itself emigrated to France, and there remains **no evidence** connecting Edward O'Brien of Gorey (1974–1996) to any of these pedigrees.
+2. **Relevance to "General Mortogh"**: these pages don't mention Glencolumbkille at all — the Ara/Kilcor branches split off in 1277, four centuries before the claimed Glencolumbkille link. But the book illustrates how many distinct O'Brien officers named Mortogh/Murrough/Terence existed across branches (Mortogh Casch, Mortogh of Duharrow, Major General Terence 1798–1865…), which supports the caution that the Glencolumbkille "General Mortogh" tradition could rest on a conflation with an officer from another branch.
+
 ## Sources
 
 - [Aldwych bus bombing — Wikipedia](https://en.wikipedia.org/wiki/Aldwych_bus_bombing)
