@@ -1,68 +1,78 @@
-# Airtime.py — runs the radio entirely on this iPhone. No Mac, no home Wi-Fi.
+# Airtime.py — serves the radio from this iPhone, for the Airtime shortcut.
 #
-# The old setup fetched everything from a Mac at 192.168.0.30:8642, which is why
-# it only worked at home. This version serves the app from the phone itself, so
-# it works on Wi-Fi, 5G, or a plane.
+# The shortcut runs grab3.py, then this, then opens http://127.0.0.1:8787/.
+# Port 8787 must match the shortcut's last step.
 #
-# Put this file and airtime.html in the same folder (~/Documents) and run it.
+# Written for Pythonista's Python 3.6: no `directory=` kwarg on the request
+# handler (that landed in 3.7), so the handler resolves paths itself.
 
 import os
-import sys
+import wave
 import threading
-import functools
 import http.server
 import socketserver
 
-PORT = 8642
+PORT = 8787
 HERE = os.path.dirname(os.path.abspath(__file__))
 PAGE = os.path.join(HERE, "airtime.html")
-URL = "http://127.0.0.1:{}/airtime.html".format(PORT)
+SILENCE = os.path.join(HERE, "_silence.wav")
 
 
-def start_server():
-    """Serve this folder on the phone's own loopback address."""
-    if not os.path.exists(PAGE):
-        sys.exit("airtime.html is missing from {} — run grab.py first.".format(HERE))
-    handler = functools.partial(http.server.SimpleHTTPRequestHandler, directory=HERE)
-    socketserver.TCPServer.allow_reuse_address = True
-    httpd = socketserver.TCPServer(("127.0.0.1", PORT), handler)
-    threading.Thread(target=httpd.serve_forever, daemon=True).start()
-    return httpd
+def make_silence(path):
+    """One second of silence, so there's something to loop if the file is gone."""
+    with wave.open(path, "wb") as fh:
+        fh.setnchannels(1)
+        fh.setsampwidth(2)
+        fh.setframerate(44100)
+        fh.writeframes(b"\x00\x00" * 44100)
 
 
-def run_in_pythonista(httpd):
-    """Preferred path: keep the page inside Pythonista's own web view.
+def keep_awake():
+    """Loop silent audio so iOS keeps Pythonista running in the background.
 
-    Handing off to Safari would background this script, and iOS suspends
-    background processes — which kills the server the page is loading from.
-    Staying in-app keeps the server alive for as long as the radio is open.
+    Without this, opening Safari backgrounds Pythonista, iOS suspends it, and
+    the server dies before Safari can load the page — which is what produced
+    "Safari can't open the page because it couldn't connect to the server".
+    An active audio session is what earns the app background time.
     """
-    import ui
-
-    view = ui.WebView(name="Airtime")
-    view.load_url(URL)
-    view.present("fullscreen", hide_title_bar=False)
-    view.wait_modal()          # blocks here while you listen
-    httpd.shutdown()
-
-
-def run_anywhere(httpd):
-    """Fallback for a-Shell/Pyto/desktop: open a browser and hold the server up."""
-    import time
-    import webbrowser
-
-    webbrowser.open(URL)
-    print("Serving {} — leave this running while you listen.".format(URL))
     try:
-        while True:
-            time.sleep(1)
-    except KeyboardInterrupt:
-        httpd.shutdown()
+        import sound
+    except ImportError:
+        return None                      # not on Pythonista; nothing to do
+    if not os.path.exists(SILENCE):
+        make_silence(SILENCE)
+    player = sound.Player(SILENCE)
+    player.number_of_loops = -1
+    player.play()
+    return player
+
+
+class Handler(http.server.SimpleHTTPRequestHandler):
+    def translate_path(self, path):
+        """Serve airtime.html at the root, everything else from this folder."""
+        clean = path.split("?", 1)[0].split("#", 1)[0]
+        if clean in ("/", "/index.html", "/airtime.html"):
+            return PAGE
+        return os.path.join(HERE, clean.lstrip("/"))
+
+    def log_message(self, *args):
+        pass                             # keep the Pythonista console clean
 
 
 if __name__ == "__main__":
-    server = start_server()
+    if not os.path.exists(PAGE):
+        raise SystemExit("airtime.html missing from {} — run grab3.py".format(HERE))
+
+    holder = keep_awake()                # keep a reference so it isn't collected
+    socketserver.TCPServer.allow_reuse_address = True
+    server = socketserver.TCPServer(("127.0.0.1", PORT), Handler)
+    threading.Thread(target=server.serve_forever, daemon=True).start()
+    print("Radio serving on http://127.0.0.1:{}/".format(PORT))
+    print("Silent audio is holding Pythonista awake — leave this running.")
+
     try:
-        run_in_pythonista(server)
-    except ImportError:
-        run_anywhere(server)
+        threading.Event().wait()         # stay alive for the shortcut's handoff
+    except KeyboardInterrupt:
+        server.shutdown()
+        if holder:
+            holder.stop()
