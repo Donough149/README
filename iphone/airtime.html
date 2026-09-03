@@ -2,552 +2,230 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Groove Radio</title>
-<meta name="theme-color" content="#101216">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Airtime</title>
+<meta name="theme-color" content="#0e1013">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Groove Radio">
-<link rel="apple-touch-icon" href="icon.png">
-<link rel="manifest" href="manifest.webmanifest">
 <style>
   :root {
-    --bg: #101216; --panel: #181b21; --card: #1e222a; --edge: #2a2f39;
-    --text: #e8eaed; --dim: #9aa3af; --accent: #4fc3f7; --like: #ff5c8a;
-    --badge: #263242;
+    --bg: #0e1013; --card: #1b1f26; --edge: #2b313b;
+    --text: #eceff3; --dim: #98a1ad; --accent: #4fc3f7; --live: #4ade80;
   }
-  * { box-sizing: border-box; }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
   body {
     margin: 0; background: var(--bg); color: var(--text);
-    font: 15px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif;
-    display: grid; grid-template-columns: 230px 1fr; grid-template-rows: 1fr auto;
-    grid-template-areas: "side main" "player player"; height: 100vh;
+    font: 16px/1.4 -apple-system, system-ui, sans-serif;
+    padding: env(safe-area-inset-top) 0 0;
+    display: flex; flex-direction: column; min-height: 100vh;
   }
-  nav { grid-area: side; background: var(--panel); overflow-y: auto; padding: 12px 0; border-right: 1px solid var(--edge); }
-  nav h1 { font-size: 17px; margin: 4px 16px 12px; }
-  nav h1 span { color: var(--accent); }
-  nav button {
-    display: block; width: 100%; text-align: left; background: none; border: none;
-    color: var(--dim); padding: 9px 16px; font: inherit; cursor: pointer;
+  header { padding: 16px 18px 6px; }
+  header h1 { margin: 0; font-size: 24px; letter-spacing: -0.3px; }
+  header h1 span { color: var(--accent); }
+  main { flex: 1; padding: 10px 14px 150px; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .st {
+    background: var(--card); border: 1px solid var(--edge); border-radius: 14px;
+    padding: 14px; text-align: left; color: var(--text); font: inherit;
+    min-height: 88px; display: flex; flex-direction: column; justify-content: space-between;
   }
-  nav button:hover { color: var(--text); background: var(--card); }
-  nav button.active { color: var(--accent); background: var(--card); border-right: 2px solid var(--accent); }
-  main { grid-area: main; overflow-y: auto; padding: 18px 22px 30px; }
-  .modehead { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-bottom: 4px; }
-  .modehead h2 { margin: 0; font-size: 20px; }
-  .modehead .desc { color: var(--dim); font-size: 13px; flex: 1; min-width: 200px; }
-  .modehead .stamp { color: var(--dim); font-size: 12px; }
-  .modehead button { background: var(--card); color: var(--text); border: 1px solid var(--edge); border-radius: 6px; padding: 5px 12px; cursor: pointer; }
-  #controls { margin: 10px 0 14px; display: flex; gap: 8px; flex-wrap: wrap; }
-  #controls input, #controls select {
-    background: var(--card); color: var(--text); border: 1px solid var(--edge); border-radius: 6px; padding: 6px 10px; font: inherit;
+  .st:active { background: #232830; }
+  .st.on { border-color: var(--accent); }
+  .st .n { font-weight: 600; font-size: 16px; }
+  .st .d { color: var(--dim); font-size: 13px; margin-top: 4px; }
+  .st .x { color: var(--dim); font-size: 12px; margin-top: 8px; }
+  h2 { font-size: 13px; color: var(--dim); text-transform: uppercase;
+       letter-spacing: 0.6px; margin: 22px 4px 10px; font-weight: 600; }
+  form { display: flex; flex-direction: column; gap: 8px; }
+  input {
+    background: var(--card); border: 1px solid var(--edge); color: var(--text);
+    border-radius: 12px; padding: 13px 14px; font: inherit; width: 100%;
   }
-  #spin { background: var(--accent); color: #06212e; border: none; border-radius: 8px; padding: 10px 26px; font-size: 16px; font-weight: 700; cursor: pointer; }
-  #grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 12px; }
-  .card { background: var(--card); border: 1px solid var(--edge); border-radius: 10px; padding: 12px; display: flex; flex-direction: column; gap: 6px; }
-  .card .top { display: flex; gap: 10px; align-items: center; }
-  .card img { width: 44px; height: 44px; border-radius: 8px; object-fit: cover; background: var(--badge); flex: none; }
-  .card .name { font-weight: 600; cursor: pointer; }
-  .card .name:hover { color: var(--accent); }
-  .card .meta { color: var(--dim); font-size: 12.5px; }
-  .badge { align-self: flex-start; background: var(--badge); color: var(--accent); font-size: 12px; border-radius: 20px; padding: 2px 10px; }
-  .tags { color: var(--dim); font-size: 12px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .card .row { display: flex; gap: 8px; margin-top: 2px; }
-  .card .row button { background: var(--panel); border: 1px solid var(--edge); color: var(--text); border-radius: 6px; padding: 4px 12px; cursor: pointer; }
-  .card .row .fav.on { color: var(--like); border-color: var(--like); }
-  #status { color: var(--dim); margin: 14px 0; }
+  input::placeholder { color: #6b7683; }
+  form button {
+    background: var(--accent); color: #062534; border: none; border-radius: 12px;
+    padding: 13px; font: inherit; font-weight: 700;
+  }
   #player {
-    grid-area: player; background: var(--panel); border-top: 1px solid var(--edge);
-    display: flex; align-items: center; gap: 12px; padding: 10px 16px; flex-wrap: wrap;
+    position: fixed; left: 0; right: 0; bottom: 0; background: #161a20;
+    border-top: 1px solid var(--edge); display: flex; align-items: center; gap: 12px;
+    padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
   }
-  #player #npArt { width: 42px; height: 42px; border-radius: 8px; object-fit: cover; background: var(--badge); flex: none; }
-  #player #npArt:not([src]) { visibility: hidden; width: 0; }
-  #player .np { flex: 1; min-width: 180px; }
-  #player .np .n { font-weight: 600; }
-  #player .np .t { color: var(--dim); font-size: 12.5px; }
-  #player button { background: var(--card); border: 1px solid var(--edge); color: var(--text); border-radius: 8px; padding: 8px 14px; font: inherit; cursor: pointer; }
-  #player button.primary { background: var(--accent); color: #06212e; border: none; font-weight: 700; }
-  #player #likeBtn.on { color: var(--like); border-color: var(--like); }
-  #player input { background: var(--card); border: 1px solid var(--edge); color: var(--text); border-radius: 8px; padding: 8px 10px; font: inherit; width: 190px; }
-  @media (max-width: 720px) {
-    body { grid-template-columns: 1fr; grid-template-areas: "side" "main" "player"; grid-template-rows: auto 1fr auto; }
-    nav { display: flex; overflow-x: auto; border-right: none; border-bottom: 1px solid var(--edge); padding: 6px; }
-    nav h1 { display: none; }
-    nav button { width: auto; white-space: nowrap; border-radius: 20px; }
-    nav button.active { border-right: none; }
+  #art { width: 52px; height: 52px; border-radius: 10px; object-fit: cover;
+         background: var(--card); flex: none; }
+  #art:not([src]) { visibility: hidden; }
+  #meta { flex: 1; min-width: 0; }
+  #name { font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  #sub { color: var(--dim); font-size: 13px; white-space: nowrap;
+         overflow: hidden; text-overflow: ellipsis; }
+  #sub.live::before {
+    content: ""; display: inline-block; width: 7px; height: 7px; border-radius: 50%;
+    background: var(--live); margin-right: 6px; vertical-align: middle;
   }
+  #toggle {
+    width: 58px; height: 58px; border-radius: 50%; border: none; flex: none;
+    background: var(--accent); color: #062534; font-size: 23px;
+  }
+  #toggle:disabled { background: var(--card); color: var(--dim); }
 </style>
 </head>
 <body>
-<nav id="nav"><h1>Groove <span>Radio</span></h1></nav>
+<header><h1>Air<span>time</span></h1></header>
 <main>
-  <div class="modehead">
-    <h2 id="modeName"></h2>
-    <span class="desc" id="modeDesc"></span>
-    <span class="stamp" id="stamp"></span>
-    <button id="refreshBtn" title="Fetch fresh data now">↻ Refresh</button>
-  </div>
-  <div id="controls"></div>
-  <div id="status"></div>
-  <div id="grid"></div>
+  <div class="grid" id="grid"></div>
+
+  <h2>Add a station</h2>
+  <form id="add">
+    <input id="sName" placeholder="Name (e.g. Amarillo)" autocapitalize="words">
+    <input id="sUrl" placeholder="Stream address (https://...)" type="url"
+           autocapitalize="none" autocorrect="off" spellcheck="false">
+    <button type="submit">Save to this phone</button>
+  </form>
 </main>
+
 <div id="player">
-  <audio id="audio"></audio>
-  <img id="npArt" alt="">
-  <div class="np"><div class="n" id="npName">Nothing playing</div><div class="t" id="npTags">Pick a station or hit Roulette</div></div>
-  <button id="playBtn" class="primary">▶</button>
-  <button id="skipBtn" title="Groove-following skip: hop to a similar small station">⏭ Skip (same groove)</button>
-  <button id="likeBtn" title="Like: votes for this station on Radio Browser and favorites it locally">♥ Like</button>
-  <input id="steer" placeholder="steer: tag or vibe, e.g. dub techno" title="Find live stations like this tag">
-  <button id="steerBtn">Go</button>
+  <audio id="audio" preload="none"></audio>
+  <img id="art" alt="">
+  <div id="meta">
+    <div id="name">Nothing playing</div>
+    <div id="sub">Pick a station</div>
+  </div>
+  <button id="toggle" disabled>▶</button>
 </div>
 
 <script>
 "use strict";
-/* ============================================================
- * Radio Browser API layer — everything is fetched LIVE.
- * Mirror auto-discovery with fallback; 60s in-memory cache so
- * auto-refresh & mode-hopping stay polite to the mirrors.
- * ============================================================ */
-const RB = (() => {
-  const FALLBACK_MIRRORS = [
-    "https://de2.api.radio-browser.info",
-    "https://fi1.api.radio-browser.info",
-    "https://at1.api.radio-browser.info",
-  ];
-  let mirrors = null;
-  const cache = new Map(); // url -> {t, data}
-  const CACHE_MS = 60_000;
 
-  async function getMirrors() {
-    if (mirrors) return mirrors;
-    try {
-      const r = await fetch("https://all.api.radio-browser.info/json/servers", { signal: AbortSignal.timeout(8000) });
-      const list = (await r.json()).map(s => "https://" + s.name);
-      mirrors = [...new Set(list)].sort(() => Math.random() - 0.5);
-    } catch { mirrors = [...FALLBACK_MIRRORS].sort(() => Math.random() - 0.5); }
-    return mirrors;
-  }
-
-  async function get(path, { fresh = false } = {}) {
-    const hit = cache.get(path);
-    if (!fresh && hit && Date.now() - hit.t < CACHE_MS) return hit.data;
-    const ms = await getMirrors();
-    let lastErr;
-    for (const m of ms.slice(0, 4)) {
-      try {
-        const r = await fetch(m + path, { signal: AbortSignal.timeout(12000) });
-        if (!r.ok) throw new Error("HTTP " + r.status);
-        const data = await r.json();
-        cache.set(path, { t: Date.now(), data });
-        return data;
-      } catch (e) { lastErr = e; }
-    }
-    throw lastErr || new Error("all mirrors failed");
-  }
-
-  const q = (params) => new URLSearchParams({ hidebroken: "true", ...params }).toString();
-  return {
-    search: (params, opts) => get("/json/stations/search?" + q(params), opts),
-    byUUIDs: (uuids) => get("/json/stations/byuuid?uuids=" + encodeURIComponent(uuids.join(","))),
-    tags: (opts) => get("/json/tags?order=stationcount&reverse=true&limit=800&hidebroken=true", opts),
-    // Side effects (not cached): click feeds clickcount, vote feeds votes.
-    click: (uuid) => getMirrors().then(ms => fetch(ms[0] + "/json/url/" + uuid).catch(() => {})),
-    vote: (uuid) => getMirrors().then(ms => fetch(ms[0] + "/json/vote/" + uuid).then(r => r.json())),
-  };
-})();
-
-/* ============================================================
- * Local state (no server): favorites, sessions, retention.
- * ============================================================ */
-const Store = {
-  load(k, d) { try { return JSON.parse(localStorage.getItem("groove." + k)) ?? d; } catch { return d; } },
-  save(k, v) { try { localStorage.setItem("groove." + k, JSON.stringify(v)); } catch {} },
-};
-const state = {
-  favorites: Store.load("favorites", {}),   // uuid -> station snapshot
-  sessions: Store.load("sessions", []),     // {uuid,name,tags,start,dur,skipped}
-  current: null,                            // station now loaded
-  sessionStart: null,
-  playing: false,
-};
-function endSession(skipped) {
-  if (!state.current || !state.sessionStart) return;
-  const dur = (Date.now() - state.sessionStart) / 1000;
-  state.sessions.push({ uuid: state.current.stationuuid, name: state.current.name,
-    tags: state.current.tags, start: state.sessionStart, dur, skipped });
-  if (state.sessions.length > 500) state.sessions = state.sessions.slice(-500);
-  Store.save("sessions", state.sessions);
-  state.sessionStart = null;
-}
-
-/* ============================================================
- * Shared helpers
- * ============================================================ */
-const MAINSTREAM = ["pop", "top 40", "top40", "hits", "chart", "charts", "dance hits", "mainstream"];
-const fmt = (n) => n >= 1000 ? (n / 1000).toFixed(1) + "k" : String(n);
-const tagsOf = (s) => (s.tags || "").split(",").map(t => t.trim().toLowerCase()).filter(Boolean);
-let tagCounts = null; // name -> stationcount, for rarity weighting
-async function getTagCounts() {
-  if (tagCounts) return tagCounts;
-  try { tagCounts = Object.fromEntries((await RB.tags()).map(t => [t.name.toLowerCase(), t.stationcount])); }
-  catch { tagCounts = {}; }
-  return tagCounts;
-}
-function rarestTags(station, counts, n = 2) {
-  return tagsOf(station)
-    .filter(t => !MAINSTREAM.includes(t))
-    .sort((a, b) => (counts[a] ?? 1) - (counts[b] ?? 1))
-    .slice(0, n);
-}
-
-/* ============================================================
- * Discovery modes. Every fetch() hits the live API.
- * ============================================================ */
-const MODES = [
-  {
-    id: "gems", name: "Hidden Gems",
-    desc: "Low listens, abnormally high likes — votes per click, minimum 10 votes.",
-    async fetch(fresh) {
-      const rows = await RB.search({ order: "votes", reverse: "true", limit: "500" }, { fresh });
-      const clicks = rows.map(s => s.clickcount).sort((a, b) => a - b);
-      const cap = clicks[Math.floor(clicks.length * 0.6)] || 1; // keep the quieter 60%
-      return rows.filter(s => s.votes >= 10 && s.clickcount <= cap)
-        .map(s => ({ s, score: s.votes / Math.max(s.clickcount, 1),
-          badge: `${fmt(s.votes)} ♥ / ${fmt(s.clickcount)} listens` }))
-        .sort((a, b) => b.score - a.score).slice(0, 60);
-    },
-  },
-  {
-    id: "rising", name: "Rising, not risen",
-    desc: "Listens accelerating but still small — catch stations about to be popular.",
-    async fetch(fresh) {
-      const rows = await RB.search({ order: "clicktrend", reverse: "true", limit: "400" }, { fresh });
-      return rows.filter(s => s.clicktrend > 0 && s.clickcount < 2000)
-        .map(s => ({ s, score: s.clicktrend / Math.sqrt(s.clickcount + 1),
-          badge: `trend +${s.clicktrend}, only ${fmt(s.clickcount)} listens` }))
-        .sort((a, b) => b.score - a.score).slice(0, 60);
-    },
-  },
-  {
-    id: "new", name: "New with traction",
-    desc: "Added in the last 90 days and already collecting votes.",
-    async fetch(fresh) {
-      const rows = await RB.search({ order: "changetimestamp", reverse: "true", limit: "600" }, { fresh });
-      const cutoff = Date.now() - 90 * 864e5;
-      return rows.filter(s => s.votes >= 5 && Date.parse(s.lastchangetime_iso8601 || 0) > cutoff)
-        .map(s => ({ s, score: s.votes, badge: `new · ${fmt(s.votes)} ♥ already` }))
-        .sort((a, b) => b.score - a.score).slice(0, 60);
-    },
-  },
-  {
-    id: "geo", name: "Geographic outliers",
-    desc: "Pick a genre; countries with the fewest stations in it come first — unexpected origins.",
-    controls: [{ type: "input", id: "geoTag", placeholder: "genre tag, e.g. jazz", value: "jazz" }],
-    async fetch(fresh, controls) {
-      const tag = (controls.geoTag || "jazz").trim().toLowerCase();
-      const rows = await RB.search({ tag, order: "votes", reverse: "true", limit: "500" }, { fresh });
-      const byCountry = {};
-      rows.forEach(s => (byCountry[s.countrycode || "?"] ??= []).push(s));
-      const rareFirst = Object.entries(byCountry).sort((a, b) => a[1].length - b[1].length);
-      return rareFirst.flatMap(([cc, list]) =>
-        list.slice(0, 2).map(s => ({ s, score: 0,
-          badge: `only ${list.length} ${tag} station${list.length > 1 ? "s" : ""} from ${cc}` }))
-      ).slice(0, 60);
-    },
-  },
-  {
-    id: "night", name: "3am gems",
-    desc: "Stations where it's prime-time evening locally right now — but not for you.",
-    async fetch(fresh) {
-      const rows = await RB.search({ order: "votes", reverse: "true", limit: "500" }, { fresh });
-      const myHour = new Date().getHours();
-      const scored = [];
-      for (const s of rows) {
-        const off = UTC_OFFSETS[s.countrycode]; if (off === undefined) continue;
-        const lh = ((new Date().getUTCHours() + off) % 24 + 24) % 24;
-        const local = lh >= 19 && lh <= 23, mine = myHour >= 19 && myHour <= 23;
-        if (local && !mine) scored.push({ s, score: s.votes, badge: `${lh}:00 locally — prime time in ${s.countrycode}` });
-      }
-      return scored.sort((a, b) => b.score - a.score).slice(0, 60);
-    },
-  },
-  {
-    id: "combos", name: "Rare tag combos",
-    desc: "Unusual pairs of tags from your favorites (or seed tags) — distinctive stations.",
-    async fetch(fresh) {
-      const counts = await getTagCounts();
-      const favs = Object.values(state.favorites);
-      const pool = favs.length ? [...new Set(favs.flatMap(s => tagsOf(s)))]
-                               : ["ambient", "jazz", "dub", "folk", "soul", "electronic"];
-      const pairs = [];
-      for (let i = 0; i < pool.length; i++) for (let j = i + 1; j < pool.length; j++)
-        pairs.push([pool[i], pool[j], (counts[pool[i]] ?? 1) * (counts[pool[j]] ?? 1)]);
-      pairs.sort((a, b) => a[2] - b[2]);
-      const out = [], seen = new Set();
-      for (const [a, b] of pairs.slice(0, 6)) {
-        const rows = await RB.search({ tagList: `${a},${b}`, order: "votes", reverse: "true", limit: "10" }, { fresh });
-        for (const s of rows) if (!seen.has(s.stationuuid)) {
-          seen.add(s.stationuuid);
-          out.push({ s, score: s.votes, badge: `rare combo: ${a} + ${b}` });
-        }
-        if (out.length >= 60) break;
-      }
-      return out;
-    },
-  },
-  {
-    id: "deep", name: "Deep cuts",
-    desc: "Anti-chart: well-liked stations with zero mainstream tags (pop / top 40 / hits / chart).",
-    async fetch(fresh) {
-      const rows = await RB.search({ order: "votes", reverse: "true", limit: "600" }, { fresh });
-      const counts = await getTagCounts();
-      return rows.filter(s => { const t = tagsOf(s); return t.length >= 2 && !t.some(x => MAINSTREAM.includes(x)); })
-        .map(s => { const r = rarestTags(s, counts, 1)[0];
-          return { s, score: s.votes / Math.max(counts[r] ?? 1, 1), badge: `no chart tags · deep: ${r || "?"}` }; })
-        .sort((a, b) => b.score - a.score).slice(0, 60);
-    },
-  },
-  {
-    id: "retention", name: "Your keepers",
-    desc: "Your own retention signal: stations you stayed on longest, refreshed live.",
-    async fetch() {
-      const agg = {};
-      for (const x of state.sessions) {
-        const a = (agg[x.uuid] ??= { dur: 0, n: 0, skips: 0 });
-        a.dur += x.dur; a.n++; if (x.skipped) a.skips++;
-      }
-      const ranked = Object.entries(agg)
-        .map(([uuid, a]) => [uuid, (a.dur / a.n) * (1 - a.skips / a.n)])
-        .sort((a, b) => b[1] - a[1]).slice(0, 40);
-      if (!ranked.length) return [];
-      const live = await RB.byUUIDs(ranked.map(r => r[0]));
-      const scoreBy = Object.fromEntries(ranked);
-      return live.map(s => ({ s, score: scoreBy[s.stationuuid] ?? 0,
-        badge: `you averaged ${Math.round((scoreBy[s.stationuuid] ?? 0) / 60)} min/listen` }))
-        .sort((a, b) => b.score - a.score);
-    },
-  },
-  {
-    id: "roulette", name: "Roulette",
-    desc: "One random station with guardrails: alive, ≥96 kbps, at least a few likes.",
-    controls: [
-      { type: "input", id: "rouTag", placeholder: "optional genre tag" },
-      { type: "button", id: "spin", label: "🎲 Spin" },
-    ],
-    async fetch(fresh, controls) {
-      const params = { order: "random", limit: "200", bitrateMin: "96" };
-      if ((controls.rouTag || "").trim()) params.tag = controls.rouTag.trim().toLowerCase();
-      const rows = (await RB.search(params, { fresh: true })).filter(s => s.lastcheckok === 1 && s.votes >= 3);
-      if (!rows.length) return [];
-      const pick = rows[Math.floor(Math.random() * rows.length)];
-      return [{ s: pick, score: 0, badge: `random pick from ${rows.length} live candidates` }];
-    },
-  },
-  {
-    id: "faded", name: "Faded giants",
-    desc: "High all-time love, drifting audience — once-popular stations the crowd forgot.",
-    async fetch(fresh) {
-      const rows = await RB.search({ order: "votes", reverse: "true", limit: "600" }, { fresh });
-      return rows.filter(s => s.votes >= 100 && s.clicktrend <= 0)
-        .map(s => ({ s, score: s.votes * (1 - s.clicktrend), // more negative trend → higher
-          badge: `${fmt(s.votes)} ♥ all-time, trend ${s.clicktrend}` }))
-        .sort((a, b) => b.score - a.score).slice(0, 60);
-    },
-  },
-  {
-    id: "favs", name: "Favorites",
-    desc: "Everything you've ♥-ed, with live status.",
-    async fetch() {
-      const uuids = Object.keys(state.favorites);
-      if (!uuids.length) return [];
-      const live = await RB.byUUIDs(uuids);
-      return live.map(s => ({ s, score: s.votes, badge: `${fmt(s.votes)} ♥ · ${fmt(s.clickcount)} listens` }));
-    },
-  },
+// Built-in stations. Custom ones live in localStorage and are added via the form.
+const BUILT_IN = [
+  { name: "Groove Salad",   desc: "ambient / downtempo", url: "https://ice1.somafm.com/groovesalad-128-mp3", art: "https://somafm.com/img3/groovesalad-400.jpg" },
+  { name: "Drone Zone",     desc: "atmospheric",         url: "https://ice1.somafm.com/dronezone-128-mp3",   art: "https://somafm.com/img3/dronezone-400.jpg" },
+  { name: "Secret Agent",   desc: "spy jazz / lounge",   url: "https://ice1.somafm.com/secretagent-128-mp3", art: "https://somafm.com/img3/secretagent-400.jpg" },
+  { name: "Indie Pop Rocks", desc: "indie",              url: "https://ice1.somafm.com/indiepop-128-mp3",    art: "https://somafm.com/img3/indiepop-400.jpg" },
+  { name: "Lush",           desc: "vocal / dreamy",      url: "https://ice1.somafm.com/lush-128-mp3",        art: "https://somafm.com/img3/lush-400.jpg" },
+  { name: "Beat Blender",   desc: "deep house",          url: "https://ice1.somafm.com/beatblender-128-mp3", art: "https://somafm.com/img3/beatblender-400.jpg" },
 ];
 
-// Rough country → UTC offset table for "3am gems" (representative city per country).
-const UTC_OFFSETS = { US:-6, CA:-6, MX:-6, BR:-3, AR:-3, CL:-4, CO:-5, PE:-5, GB:0, IE:0, PT:0, ES:1, FR:1, DE:1, IT:1, NL:1, BE:1, CH:1, AT:1, PL:1, CZ:1, SE:1, NO:1, DK:1, HU:1, HR:1, RS:1, GR:2, RO:2, BG:2, FI:2, UA:2, TR:3, RU:3, EG:2, ZA:2, NG:1, KE:3, MA:1, IL:2, SA:3, AE:4, IR:3.5, IN:5.5, PK:5, BD:6, TH:7, VN:7, ID:7, MY:8, SG:8, PH:8, CN:8, HK:8, TW:8, KR:9, JP:9, AU:10, NZ:12 };
-
-/* ============================================================
- * UI
- * ============================================================ */
 const $ = (id) => document.getElementById(id);
-let activeMode = MODES[0];
-let refreshTimer = null;
+const audio = $("audio");
 
-function buildNav() {
-  for (const m of MODES) {
+const store = {
+  read(key, fallback) {
+    try { return JSON.parse(localStorage.getItem("airtime." + key)) ?? fallback; }
+    catch { return fallback; }
+  },
+  write(key, value) {
+    try { localStorage.setItem("airtime." + key, JSON.stringify(value)); } catch {}
+  },
+};
+
+let custom = store.read("stations", []);
+let current = null;
+
+const stations = () => custom.concat(BUILT_IN);
+
+function render() {
+  const grid = $("grid");
+  grid.textContent = "";
+  stations().forEach((s) => {
     const b = document.createElement("button");
-    b.textContent = m.name; b.dataset.id = m.id;
-    b.onclick = () => setMode(m);
-    $("nav").appendChild(b);
-  }
-}
-function setMode(m) {
-  activeMode = m;
-  document.querySelectorAll("nav button").forEach(b => b.classList.toggle("active", b.dataset.id === m.id));
-  $("modeName").textContent = m.name;
-  $("modeDesc").textContent = m.desc;
-  const c = $("controls"); c.innerHTML = "";
-  for (const ctl of m.controls || []) {
-    if (ctl.type === "input") {
-      const i = document.createElement("input");
-      i.id = ctl.id; i.placeholder = ctl.placeholder || ""; i.value = ctl.value || "";
-      i.onchange = () => render(true); c.appendChild(i);
-    } else if (ctl.type === "button") {
-      const b = document.createElement("button");
-      b.id = ctl.id; b.textContent = ctl.label; b.onclick = () => render(true); c.appendChild(b);
+    b.className = "st" + (current && current.url === s.url ? " on" : "");
+    b.onclick = () => play(s);
+
+    const n = document.createElement("div");
+    n.className = "n";
+    n.textContent = s.name;
+
+    const d = document.createElement("div");
+    d.className = "d";
+    d.textContent = s.desc || "";
+    b.append(n, d);
+
+    if (s.custom) {
+      const x = document.createElement("div");
+      x.className = "x";
+      x.textContent = "Remove";
+      x.onclick = (e) => { e.stopPropagation(); remove(s); };
+      b.appendChild(x);
     }
-  }
-  render(false);
-}
-function controlValues() {
-  const out = {};
-  for (const ctl of activeMode.controls || [])
-    if (ctl.type === "input") out[ctl.id] = $(ctl.id)?.value || "";
-  return out;
+    grid.appendChild(b);
+  });
 }
 
-let renderSeq = 0;
-async function render(fresh) {
-  const seq = ++renderSeq;
-  $("status").textContent = "Fetching live data…";
-  $("grid").innerHTML = "";
-  clearTimeout(refreshTimer);
-  try {
-    const items = await activeMode.fetch(fresh, controlValues());
-    if (seq !== renderSeq) return; // a newer render superseded this one
-    $("status").textContent = items.length ? "" :
-      (activeMode.id === "retention" ? "Listen to a few stations first — this mode learns from you." :
-       activeMode.id === "favs" ? "No favorites yet — hit ♥ on anything you love." : "Nothing matched right now.");
-    $("stamp").textContent = "live · " + new Date().toLocaleTimeString();
-    for (const it of items) $("grid").appendChild(card(it));
-  } catch (e) {
-    if (seq !== renderSeq) return;
-    $("status").textContent = "Couldn't reach Radio Browser (" + e.message + "). Retrying on next refresh.";
-  }
-  // Always-live: visible list re-fetches every 2 minutes.
-  refreshTimer = setTimeout(() => render(true), 120_000);
+function remove(s) {
+  custom = custom.filter((c) => c.url !== s.url);
+  store.write("stations", custom);
+  render();
 }
 
-function card({ s, badge }) {
-  const el = document.createElement("div"); el.className = "card";
-  const top = document.createElement("div"); top.className = "top";
-  const img = document.createElement("img");
-  img.loading = "lazy"; img.src = s.favicon || ""; img.onerror = () => img.removeAttribute("src");
-  const nm = document.createElement("div");
-  const name = document.createElement("div"); name.className = "name"; name.textContent = s.name.trim() || "(unnamed)";
-  name.onclick = () => play(s);
-  const meta = document.createElement("div"); meta.className = "meta";
-  meta.textContent = [s.countrycode, s.codec && `${s.codec} ${s.bitrate || "?"}kbps`].filter(Boolean).join(" · ");
-  nm.append(name, meta); top.append(img, nm); el.appendChild(top);
-  const b = document.createElement("span"); b.className = "badge"; b.textContent = badge; el.appendChild(b);
-  const tg = document.createElement("div"); tg.className = "tags"; tg.textContent = s.tags || ""; el.appendChild(tg);
-  const row = document.createElement("div"); row.className = "row";
-  const pb = document.createElement("button"); pb.textContent = "▶ Play"; pb.onclick = () => play(s);
-  const fb = document.createElement("button"); fb.className = "fav" + (state.favorites[s.stationuuid] ? " on" : "");
-  fb.textContent = "♥"; fb.onclick = () => { toggleFav(s); fb.classList.toggle("on"); };
-  row.append(pb, fb); el.appendChild(row);
-  return el;
-}
-
-/* ============================================================
- * Player + groove-following skip
- * ============================================================ */
 function play(s) {
-  endSession(false);
-  state.current = s; state.sessionStart = Date.now();
-  const a = $("audio");
-  a.src = s.url_resolved || s.url; a.play().then(() => { state.playing = true; updatePlayerUI(); }).catch(() => {});
-  state.playing = true;
-  RB.click(s.stationuuid); // feed the ecosystem's clickcount
-  // Lock-screen / control-center metadata + controls on iPhone.
+  current = s;
+  audio.src = s.url;
+  audio.play().catch(() => setSub("Couldn't connect — tap ▶ to retry"));
+
+  $("name").textContent = s.name;
+  setSub(s.desc || "Live", true);
+  const art = $("art");
+  if (s.art) { art.src = s.art; art.onerror = () => art.removeAttribute("src"); }
+  else art.removeAttribute("src");
+
+  $("toggle").disabled = false;
+  store.write("last", s);
+  render();
+
+  // Station-level info only: this is the station's name and logo, not the
+  // current song. Reading track titles needs the stream itself, which a web
+  // page can't see.
   if ("mediaSession" in navigator) {
     navigator.mediaSession.metadata = new MediaMetadata({
-      title: s.name.trim(), artist: s.tags || s.countrycode || "radio",
-      artwork: s.favicon ? [{ src: s.favicon }] : [],
+      title: s.name,
+      artist: s.desc || "Live radio",
+      artwork: s.art ? [{ src: s.art, sizes: "400x400" }] : [],
     });
-    navigator.mediaSession.setActionHandler("play", () => $("playBtn").onclick());
-    navigator.mediaSession.setActionHandler("pause", () => $("playBtn").onclick());
-    navigator.mediaSession.setActionHandler("nexttrack", () => $("skipBtn").onclick());
+    navigator.mediaSession.setActionHandler("play", toggle);
+    navigator.mediaSession.setActionHandler("pause", toggle);
   }
-  updatePlayerUI();
 }
-function updatePlayerUI() {
-  const art = $("npArt");
-  if (state.current?.favicon) { art.src = state.current.favicon; art.onerror = () => art.removeAttribute("src"); }
-  else art.removeAttribute("src");
-  $("npName").textContent = state.current ? state.current.name.trim() : "Nothing playing";
-  $("npTags").textContent = state.current ? (state.current.tags || state.current.countrycode || "") : "Pick a station or hit Roulette";
-  $("playBtn").textContent = state.playing ? "⏸" : "▶";
-  $("likeBtn").classList.toggle("on", !!(state.current && state.favorites[state.current.stationuuid]));
+
+function setSub(text, live) {
+  const sub = $("sub");
+  sub.textContent = text;
+  sub.className = live ? "live" : "";
 }
-$("playBtn").onclick = () => {
-  const a = $("audio");
-  if (!state.current) return;
-  if (state.playing) { a.pause(); state.playing = false; }
-  else { a.play().catch(() => {}); state.playing = true; }
-  updatePlayerUI();
+
+function toggle() {
+  if (!current) return;
+  if (audio.paused) audio.play().catch(() => {});
+  else audio.pause();
+}
+
+$("toggle").onclick = toggle;
+audio.onplaying = () => { $("toggle").textContent = "⏸"; setSub(current.desc || "Live", true); };
+audio.onpause = () => { $("toggle").textContent = "▶"; setSub("Paused"); };
+audio.onwaiting = () => setSub("Buffering…");
+audio.onerror = () => setSub("Stream unavailable");
+
+$("add").onsubmit = (e) => {
+  e.preventDefault();
+  const name = $("sName").value.trim();
+  const url = $("sUrl").value.trim();
+  if (!name || !url) return;
+  custom.unshift({ name, url, desc: "Added by you", custom: true });
+  store.write("stations", custom);
+  $("sName").value = $("sUrl").value = "";
+  render();
 };
 
-// Skip = the groove-follower. Hop to a similar, small, unheard station.
-$("skipBtn").onclick = async () => {
-  const cur = state.current;
-  endSession(true); // a skip is a negative retention signal
-  const counts = await getTagCounts();
-  const seed = cur ? rarestTags(cur, counts, 2) : [];
-  const heard = new Set(state.sessions.map(x => x.uuid));
-  let rows = [];
-  try {
-    if (seed.length)
-      rows = await RB.search({ tagList: seed.join(","), order: "votes", reverse: "true", limit: "100" }, { fresh: true });
-    if (rows.length < 3 && seed.length) // rare pair too rare → widen to best single tag
-      rows = await RB.search({ tag: seed[0], order: "votes", reverse: "true", limit: "100" }, { fresh: true });
-    if (!rows.length) // nothing playing yet → roulette-style start
-      rows = await RB.search({ order: "random", limit: "100", bitrateMin: "96" }, { fresh: true });
-  } catch { return; }
-  const pool = rows.filter(s => s.lastcheckok === 1 && s.stationuuid !== cur?.stationuuid && !heard.has(s.stationuuid));
-  const usable = pool.length ? pool : rows.filter(s => s.stationuuid !== cur?.stationuuid);
-  if (!usable.length) return;
-  // Prefer smaller stations within the groove: weight by votes/clicks ratio.
-  usable.sort((a, b) => (b.votes / Math.max(b.clickcount, 1)) - (a.votes / Math.max(a.clickcount, 1)));
-  play(usable[Math.floor(Math.random() * Math.min(usable.length, 8))]);
-};
-
-function toggleFav(s) {
-  if (state.favorites[s.stationuuid]) delete state.favorites[s.stationuuid];
-  else { state.favorites[s.stationuuid] = s; RB.vote(s.stationuuid).catch(() => {}); } // like → real upstream vote
-  Store.save("favorites", state.favorites);
-  updatePlayerUI();
+// Restore the last station without autoplaying — iOS blocks that anyway.
+const last = store.read("last", null);
+if (last) {
+  current = last;
+  $("name").textContent = last.name;
+  setSub("Tap ▶ to resume");
+  if (last.art) $("art").src = last.art;
+  $("toggle").disabled = false;
 }
-$("likeBtn").onclick = () => state.current && toggleFav(state.current);
-
-// Manual steering: jump the groove to any tag.
-async function steer() {
-  const t = $("steer").value.trim().toLowerCase(); if (!t) return;
-  try {
-    const rows = (await RB.search({ tag: t, order: "votes", reverse: "true", limit: "60" }, { fresh: true }))
-      .filter(s => s.lastcheckok === 1);
-    if (rows.length) play(rows[Math.floor(Math.random() * Math.min(rows.length, 10))]);
-    else $("npTags").textContent = `no live stations tagged "${t}"`;
-  } catch (e) { $("npTags").textContent = "steer failed: " + e.message; }
-}
-$("steerBtn").onclick = steer;
-$("steer").onkeydown = (e) => { if (e.key === "Enter") steer(); };
-
-$("refreshBtn").onclick = () => render(true);
-window.addEventListener("beforeunload", () => endSession(false));
-// iPhone freezes background tabs/PWAs: the 2-minute polling loop stops while
-// hidden, so re-poll live data the moment the app returns to the foreground.
-document.addEventListener("visibilitychange", () => {
-  if (document.visibilityState === "visible") render(true);
-});
-
-buildNav();
-setMode(MODES[0]);
+render();
 </script>
 </body>
 </html>
