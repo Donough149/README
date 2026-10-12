@@ -43,3 +43,12 @@ Plus the player's **⏭ Skip (same groove)**: skipping hops to another live, sma
 station matching the current station's rarest tags, skips what you've already
 heard, and logs the skip as a negative signal for *Your keepers*. The steer box
 in the player bar jumps the groove to any tag you type.
+
+## Mandelbrot Journey
+
+`mandelbrot.html` is a separate, self-contained fractal explorer (no dependencies).
+Drag to pan, scroll/pinch/double-tap to zoom, pick a destination (Seahorse Valley,
+Elephant Valley, a mini-brot, …) and press **Dive** (or Space) to glide steadily
+deeper. **Julia** shows the Julia set of the point under the cursor, **Palette** and
+**Flow** recolor without recomputing. It uses plain double precision, so detail
+holds down to about 10¹³× zoom.
